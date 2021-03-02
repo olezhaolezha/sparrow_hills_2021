@@ -24,10 +24,9 @@ public:
     }
 
     Complex& operator=(const Complex& copied) {
-        Complex our(copied);
         _real = copied._real;
         _imaginary = copied._imaginary;
-        return our;
+        return (*this);
     }
 
     ~Complex() {
@@ -54,6 +53,13 @@ public:
         return our;
     }
 
+    Complex operator+(const Complex& other) const {
+        Complex our (*this);
+        our._real += other._real;
+        our._imaginary += other._imaginary;
+        return our;
+    }
+
     Complex operator-(const Complex& other) const {
         Complex our (*this);
         our._real -= other._real;
@@ -61,12 +67,7 @@ public:
         return our;
     }
 
-    Complex operator+(const Complex& other) const {
-        Complex our (*this);
-        our._real += other._real;
-        our._imaginary += other._imaginary;
-        return our;
-    }
+
 
     Complex operator*(const Complex& other) const {
         Complex our (*this);
@@ -168,5 +169,6 @@ int main() {
     }
 
     cout << "Number of tests: " << tests << ", number of errors: " << errors << endl;
+
     return 0;
 }
