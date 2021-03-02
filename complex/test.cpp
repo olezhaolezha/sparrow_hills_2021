@@ -4,11 +4,6 @@
 using namespace std;
 
 class Complex {
-
-private:
-
-    double _real, _imaginary;
-
 public:
     Complex() {
     }
@@ -99,6 +94,10 @@ public:
         our._imaginary = -our._imaginary;
         return our;
     }
+
+private:
+
+    double _real, _imaginary;
 };
 
 int main() {
