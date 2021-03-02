@@ -10,7 +10,6 @@ private:
     double _real, _imaginary;
 
 public:
-
     Complex() {
     }
 
@@ -71,16 +70,19 @@ public:
 
     Complex operator*(const Complex& other) const {
         Complex our (*this);
+        double x = our._real;
         our._real = (our._real * other._real - our._imaginary * other._imaginary);
-        our._imaginary = our._imaginary * other._real + our._real * other._imaginary;
+        our._imaginary = (our._imaginary * other._real) + (x * other._imaginary);
         return our;
     }
 
     Complex operator/(const Complex& other) const {
         Complex our (*this);
-        Complex Mod (other._real * other._real + other._imaginary * other._imaginary, 0);
-        return (our * other.Conjugate()) / Mod;
-
+        double Mod = other._real * other._real + other._imaginary * other._imaginary;
+        Complex x(our * other.Conjugate());
+        x._real = x._real / Mod;
+        x._imaginary = x._imaginary / Mod;
+        return x;
     }
 
     double module() const {
@@ -94,6 +96,7 @@ public:
     Complex Conjugate() const {
         Complex our (*this);
         our._imaginary = -our._imaginary;
+        return our;
     }
 };
 
@@ -165,6 +168,5 @@ int main() {
     }
 
     cout << "Number of tests: " << tests << ", number of errors: " << errors << endl;
-
     return 0;
 }
