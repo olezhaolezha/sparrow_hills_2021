@@ -4,54 +4,97 @@
 using namespace std;
 
 class Complex {
+
+private:
+
+    double _real, _imaginary;
+
 public:
+
     Complex() {
     }
 
     Complex(const double real, const double imaginary) {
+        _real = real;
+        _imaginary = imaginary;
     }
 
     Complex(const Complex& copied) {
+        _real = copied._real;
+        _imaginary = copied._imaginary;
     }
 
     Complex& operator=(const Complex& copied) {
+        Complex our(copied);
+        _real = copied._real;
+        _imaginary = copied._imaginary;
+        return our;
     }
 
     ~Complex() {
     }
 
     bool operator!=(const Complex& other) const {
+        if (_real != other._real || _imaginary != other._imaginary){
+            return true;
+        }
+        return false;
     }
 
     bool operator==(const Complex& other) const {
+        if (_real != other._real || _imaginary != other._imaginary){
+            return false;
+        }
+        return true;
     }
 
     Complex operator-() const {
-    }
-
-    Complex operator+(const Complex& other) const {
+        Complex our (*this);
+        our._real = -our._real;
+        our._imaginary = -our._imaginary;
+        return our;
     }
 
     Complex operator-(const Complex& other) const {
+        Complex our (*this);
+        our._real -= other._real;
+        our._imaginary -= other._imaginary;
+        return our;
+    }
+
+    Complex operator+(const Complex& other) const {
+        Complex our (*this);
+        our._real += other._real;
+        our._imaginary += other._imaginary;
+        return our;
     }
 
     Complex operator*(const Complex& other) const {
+        Complex our (*this);
+        our._real = (our._real * other._real - our._imaginary * other._imaginary);
+        our._imaginary = our._imaginary * other._real + our._real * other._imaginary;
+        return our;
     }
 
     Complex operator/(const Complex& other) const {
+        Complex our (*this);
+        Complex Mod (other._real * other._real + other._imaginary * other._imaginary, 0);
+        return (our * other.Conjugate()) / Mod;
+
     }
 
     double module() const {
+        return sqrt(_real * _real + _imaginary * _imaginary);
     }
 
     double argument() const {
+        return atan2(_real, _imaginary);
     }
 
     Complex Conjugate() const {
+        Complex our (*this);
+        our._imaginary = -our._imaginary;
     }
-
-private:
-    double _real, _imaginary;
 };
 
 int main() {
